@@ -1,16 +1,22 @@
 <script setup>
+    import { useVuelidate } from '@vuelidate/core'
+    import { required, email, helpers } from '@vuelidate/validators'
+
     useHead({
         title: 'Регистрация',
     })
 
-    const name = ref('')
-    const email = ref('')
-    const password = ref('')
-    const confirmation_password = ref('')
-    const subscribe_news = ref(true)
+    const button = reactive({
+        style: 'danger',
+        text: 'Регистрация'
+    })
 
-    function submit() {
-        // TODO: 
+    async function submit(formData, callback) {
+        const success = await useAuthStore().register(formData)
+        if (success) {
+            //TODO: Уже авторизовать, перенаправить на главную
+        }
+        callback(success)
     }
 </script>
 
@@ -24,21 +30,21 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    <form @submit.prevent="submit">
-                        <h3 class="title">Зарегистрируйтесь <br>и начните обучение</h3>
-                        <BFormInput placeholder="Ваше имя" v-model="name" />
-                        <BFormInput type="email" placeholder="Адрес электронной почты" v-model="email" />
-                        <BFormInput type="password" placeholder="Пароль" v-model="password" />
-                        <BFormInput type="password" placeholder="Пароль еще раз" v-model="confirmation_password" />
-
-                        <BFormCheckbox v-model="subscribe_news">Отправляйте мне письма о событиях и мероприятиях платформы</BFormCheckbox>
-
-                        <BButton variant="danger">Регистрация</BButton>
-                        <BAlert :model-value="true" variant="secondary">
-                            <span>Уже зарегистрировались?</span>
-                            <NuxtLink class="login-link" to="/login">Войти</NuxtLink>
-                        </BAlert>
-                    </form>
+                    <FormWrapper
+                        name="registration"
+                        :button="button"
+                        @submit="submit"
+                    >
+                        <template v-slot:header>
+                            <h3 class="title">Зарегистрируйтесь <br>и начните обучение</h3>
+                        </template>
+                        <template v-slot:footer>
+                            <BAlert :model-value="true" variant="secondary">
+                                <span>Уже зарегистрировались?</span>
+                                <NuxtLink class="login-link" to="/login">Войти</NuxtLink>
+                            </BAlert>
+                        </template>
+                    </FormWrapper>
                 </div>
             </div>
         </div>

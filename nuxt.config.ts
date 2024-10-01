@@ -1,4 +1,15 @@
 export default defineNuxtConfig({
+    compatibilityDate: '2024-04-03',
+    devtools: {
+        enabled: true
+    },
+    runtimeConfig: {
+        public: {
+            appName: process.env.APP_NAME,
+            appUrl: process.env.APP_URL,
+            apiUrl: process.env.API_URL
+        }
+    },
     app: {
         head: {
             titleTemplate: 'Paideia - %s',
@@ -17,13 +28,10 @@ export default defineNuxtConfig({
         pageTransition: { name: 'page', mode: 'out-in' },
         layoutTransition: { name: 'layout', mode: 'out-in' }
     },
-    compatibilityDate: '2024-04-03',
-    devtools: {
-        enabled: true
-    },
     css: [
         '~/assets/scss/_bootstrap.scss',
         '~/assets/scss/_index.scss',
+        '~/node_modules/vue-toast-notification/dist/theme-bootstrap.css'
     ],
     modules: [
         '@pinia/nuxt',

@@ -2,6 +2,15 @@
     useHead({
         title: 'Авторизация',
     })
+
+    const button = reactive({
+        style: 'danger',
+        text: 'Войти'
+    })
+
+    async function submit(formData) {
+        //TODO:
+    }
 </script>
 
 <template>
@@ -14,17 +23,21 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    <form>
-                        <h3 class="title">Вход</h3>
-                        <BFormInput type="email" placeholder="Адрес электронной почты" />
-                        <BFormInput type="password" placeholder="Пароль" />
-
-                        <BButton variant="danger">Войти</BButton>
-                        <BAlert :model-value="true" variant="secondary">
-                            <span>Еще нет аккаунта?</span>
-                            <NuxtLink class="login-link" to="/registration">Зарегистрироваться</NuxtLink>
-                        </BAlert>
-                    </form>
+                    <FormWrapper
+                        name="login"
+                        :button="button"
+                        @submit="submit"
+                    >
+                        <template v-slot:header>
+                            <h3 class="title">Вход</h3>
+                        </template>
+                        <template v-slot:footer>
+                            <BAlert :model-value="true" variant="secondary">
+                                <span>Еще нет аккаунта?</span>
+                                <NuxtLink class="login-link" to="/registration">Зарегистрироваться</NuxtLink>
+                            </BAlert>
+                        </template>
+                    </FormWrapper>
                 </div>
             </div>
         </div>
