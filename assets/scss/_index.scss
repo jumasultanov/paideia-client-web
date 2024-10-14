@@ -1,37 +1,228 @@
+@import "./font";
+
+$blue: #4D6D9A;
+
 :root {
-    --blue-color: #3565AC;
-    --red-color: #C03131;
+    --blue-color: #4D6D9A;
+    --blue-light-color: #86B3D1;
+    --blue-light-text-color: #B2D2FE;
+    --green-color: #99CED3;
+    --green-light-color: #B5EDCC;
+    --green-black-color: #356A6F;
+    --red-light-color: #EDB5BF;
+    --red-black-color: #753D47;
+    --white-color: #fff;
+    --gray-color: #D6D6D6;
+    --dark-gray-color: #5F6366;
+    --black-color: #353535;
+    --orange-color: #EDD6B5;
+    --orange-black-color: #755E3D;
+    --purple-color: #B7B5ED;
+
+    --bs-body-font-family: "Hero", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --bs-body-font-size: 16px;
+    --bs-body-font-weight: normal;
+    --bs-body-line-height: 1.25;
+    --bs-body-color: var(--black-color);
+
+    --space: 120px;
 }
 
-.btn {
-    --bs-btn-padding-x: 16px;
-    --bs-btn-border-radius: 0px;
-    --bs-btn-border-width: 4px;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 16px;
+@mixin hard-font {
+    font-family: 'DeleddaOpen';
     font-weight: bold;
+    line-height: 1.1;
+    color: var(--dark-gray-color);
+    --back-color: var(--gray-color);
+}
 
-    .icon {
-        img {
-            display: block;
-            max-height: 24px;
+h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
+    @include hard-font;
+}
+
+h1, .h1 {
+    font-size: 72px;
+}
+
+h2, .h2 {
+    font-size: 36px;
+}
+
+h3, .h3 {
+    font-size: 28px;
+}
+
+h4, .h4 {
+    font-size: 20px;
+}
+
+a {
+    &:not(.btn) {
+        --link-color: var(--blue-color);
+        --link-hover-color: var(--blue-light-color);
+        position: relative;
+        display: inline-block;
+        text-decoration: none;
+        color: var(--link-color);
+        border-bottom: 1px dashed var(--link-color);
+        transition: color .3s ease-in-out, border-color .3s ease-in-out;
+
+        &:hover {
+            color: var(--link-hover-color);
+            border-color: var(--link-hover-color);
         }
     }
 }
 
-.btn-icon {
-    --bs-btn-padding-x: 6px;
-    --bs-btn-padding-y: 6px;
+.btn {
+    --bs-btn-border-radius: 25px;
+    --bs-btn-border-width: 0px;
+    --bs-btn-font-family: inherit;
+    --bs-btn-font-size: inherit;
+    --bs-btn-font-weight: inherit;
+    --bs-btn-line-height: inherit;
+
+    --btn-padd-x: 24px;
+    --btn-padd-y: 12px;
+    --btn-gap: 12px;
+    --btn-icon-size: 40px;
+    --btn-outline-border: var(--bs-btn-bg);
+    padding-top: calc(var(--btn-padd-y) - 1px);
+    padding-bottom: calc(var(--btn-padd-y) + 1px);
+    padding-right: var(--btn-padd-x);
+    padding-left: var(--btn-padd-x);
+    position: relative;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: var(--btn-gap);
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+    &.btn-component {
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 1px solid var(--btn-outline-border);
+            border-radius: var(--bs-btn-border-radius);
+            transition: transform 0.3s ease-in-out, border-color .3s ease-in-out;
+        }
+    }
+
+    .left-icon {
+        svg {
+            stroke: var(--bs-btn-color);
+            fill: var(--bs-btn-color);
+            transition: stroke 0.3s ease-in-out, fill 0.3s ease-in-out;
+        }
+    }
+    
+    &:hover, &.active {
+        
+        &.btn-component {
+            &::before {
+                transform: translate(6px, 6px);
+            }
+        }
+
+        .left-icon {
+            svg {
+                stroke: var(--bs-btn-hover-color);
+                fill: var(--bs-btn-hover-color);
+            }
+        }
+    }
+
+    .right-icon {
+        position: relative;
+        width: var(--btn-icon-size);
+        height: var(--btn-icon-size);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: -20px;
+        margin-bottom: -22px;
+        margin-right: calc(2px - var(--btn-padd-x));
+        
+        &::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: var(--bs-btn-color);
+            transition: transform .3s ease-in-out, background-color .3s ease-in-out;
+        }
+
+        svg {
+            position: relative;
+            stroke: var(--bs-btn-bg);
+            fill: var(--bs-btn-bg);
+        }
+    }
+}
+
+.btn-white {
+    --bs-btn-bg: var(--white-color);
+    --bs-btn-color: var(--blue-color);
+    --bs-btn-hover-bg: var(--white-color);
+    --bs-btn-hover-color: var(--blue-light-color);
+
+    &:hover, &.active {
+
+        .right-icon {
+
+            &::before {
+                transform: scale(0.8);
+                background-color: var(--blue-light-color);
+            }
+        }
+    }
+}
+
+.btn-outline-primary {
+    --bs-btn-border-width: 1px;
+    --btn-padd-y: 11px;
+
+    --bs-btn-bg: transparent;
+    --bs-btn-color: var(--blue-color);
+
+    &.btn-component {
+        &::before {
+            display: none;
+        }
+    }
+}
+
+.btn-link {
+    --btn-gap: 8px;
+    --btn-padd-x: 0px;
+    --btn-padd-y: 0px;
+    --bs-btn-hover-color: var(--blue-light-color);
+    text-decoration: none;
+    text-transform: none;
 }
 
 .form-control {
-    --bs-border-width: 4px;
     --bs-border-color: var(--blue-color);
-    padding: 16px 32px;
+    padding: 11px 24px;
+    border-radius: 24px;
+    line-height: inherit;
+    
+    &:focus {
+        box-shadow: none;
+        border-color: var(--blue-color);
+    }
+    
+    &::placeholder {
+        color: rgba($blue, 0.35);
+    }
 }
 
+/*
 .alert {
     --bs-alert-border-radius: 0;
     --bs-border-width: 0;
@@ -75,10 +266,6 @@
             margin-bottom: 32px;
         }
 
-        .form-control {
-            --bs-border-radius: 0;
-        }
-
         .btn {
             --bs-btn-padding-y: 16px;
             justify-content: center;
@@ -94,10 +281,4 @@
             }
         }
     }
-}
-
-.main-btns {
-    .btn {
-        --bs-btn-border-radius: 6px;
-    }
-}
+}*/

@@ -5,40 +5,45 @@
 <template>
     <header>
         <nav class="top-nav">
-            <ul class="container">
-                <li><a href="#">Миссия</a></li>
-                <li><a href="#">Задачи</a></li>
-                <li><a href="#">Новости</a></li>
-                <li><a href="#">Сообщество</a></li>
-                <li><a href="#">Наш прогресс</a></li>
-            </ul>
+            <div class="container">
+                <ul class="top-menu">
+                    <li><a href="#">Миссия</a></li>
+                    <li><a href="#">Задачи</a></li>
+                    <li><a href="#">Новости</a></li>
+                    <li><a href="#">Сообщество</a></li>
+                    <li><a href="#">Наш прогресс</a></li>
+                </ul>
+                <div class="social-links">
+                    <a class="social-link" href="#" target="_blank">
+                        <HelperSvg name="vk" size="22" />
+                    </a>
+                    <a class="social-link" href="#" target="_blank">
+                        <HelperSvg name="tg" size="22" />
+                    </a>
+                    <a class="social-link" href="#" target="_blank">
+                        <HelperSvg class="red" name="youtube" size="22" />
+                    </a>
+                </div>
+                <div class="lang">
+                    <span class="current">RU</span>
+                    <HelperSvg name="arrow-down" />
+                </div>
+            </div>
         </nav>
         <div class="menu">
             <div class="container menu-content">
                 <NuxtLink class="logo" to="/">
-                    <img src="~/assets/icon/logo.svg" alt="Paideia" />
+                    <HelperSvg name="logo" />
                 </NuxtLink>
                 <div class="main-btns">
-                    <BDropdown v-model="showMenu" text="Исследовать" variant="primary">
-                        <BDropdownItem>Инженерия</BDropdownItem>
-                        <BDropdownItem>Философия</BDropdownItem>
-                        <BDropdownItem>ИТ и программирование</BDropdownItem>
-                        <BDropdownItem>Медиа</BDropdownItem>
-                        <BDropdownItem>Социология</BDropdownItem>
-                        <BDropdownItem>Культура и искусство</BDropdownItem>
-                        <BDropdownItem>Педагогика и образование</BDropdownItem>
-                        <BDropdownItem>Экономика</BDropdownItem>
-                    </BDropdown>
-                    <BButton variant="danger">
-                        <span>Общение</span>
-                        <span class="icon"><img src="~/assets/icon/chat.svg"></span>
-                    </BButton>
-                </div>
-                <div class="search-form">
-                    <BFormInput placeholder="Что вы хотите познавать?" />
-                    <button class="btn">
-                        <div class="icon"><img src="~/assets/icon/search.svg"></div>
-                    </button>
+                    <HelperButton :outline="true" :burger="true">Исследовать</HelperButton>
+                    <div class="search-form">
+                        <BFormInput placeholder="Что вы хотите познавать?" autocomplete="off" />
+                        <BButton>
+                            <HelperSvg name="search" />
+                        </BButton>
+                    </div>
+                    <HelperLink icon="chat">Общение</HelperLink>
                 </div>
                 <PageUserSetup />
             </div>
@@ -49,85 +54,165 @@
 
 <style lang="scss" scoped>
     .top-nav {
-        background-color: black;
+        background-color: var(--blue-color);
 
-        ul {
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 48px;
+        }
+
+        .top-menu {
             display: flex;
             list-style: none;
             align-items: center;
-            height: 53px;
-            gap: 40px;
             margin-bottom: 0;
+            padding: 0;
+            
+            li {
+                position: relative;
+                padding: 0 12px;
 
-            a {
-                color: white;
-                font-weight: bold;
-                text-decoration: none;
-                text-transform: uppercase;
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    right: 0;
+                    width: 1px;
+                    height: 20px;
+                    margin-top: -10px;
+                    background-color: var(--white-color);
+                    border-radius: 1px;
+                }
+
+                &:last-child {
+
+                    &::after {
+                        display: none;
+                    }
+                }
+            }
+
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+
+            .social-link {
+
+                .icon {
+                    fill: var(--white-color);
+                    transition: fill .3s ease-in-out;
+                }
 
                 &:hover {
-                    opacity: .7;
+                    
+                    .icon {
+                        fill: var(--blue-light-text-color);
+
+                        &.red {
+                            fill: var(--red-light-color);
+                        }
+                    }
                 }
+            }
+        }
+
+        .lang {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            .current {
+                color: var(--white-color);
+                transition: color .3s ease-in-out;
+            }
+            
+            .icon {
+                fill: white;
+                transition: fill .3s ease-in-out;
+            }
+
+            &:hover {
+                .current {
+                    color: var(--blue-light-text-color);
+                }
+
+                .icon {
+                    fill: var(--blue-light-text-color);
+                }
+            }
+
+        }
+
+        a {
+            display: block;
+            padding: 18px 0;
+            color: var(--white-color);
+
+            &:hover {
+                color: var(--blue-light-text-color);
             }
         }
     }
 
+    .top-nav, .menu {
+        a {
+            text-decoration: none;
+            border-bottom: none;
+        }
+    }
+
     .menu {
-        background-color: white;
-        box-shadow: 0px 14px 18px -3px rgba(0,0,0,.3);
+        background-color: var(--white-color);
+        box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.1);
 
         .menu-content {
             display: flex;
-            gap: 32px;
+            gap: 24px;
             align-items: center;
-            height: 110px;
+            justify-content: space-between;
+            height: 108px;
 
             .logo {
                 flex-shrink: 0;
                 display: flex;
-                width: 105px;
-
-                img {
-                    width: 100%;
-                }
             }
 
             .main-btns {
                 display: flex;
                 gap: 24px;
                 align-items: center;
-
-                .btn {
-                    --bs-btn-border-radius: 6px;
-                }
             }
 
             .search-form {
                 position: relative;
                 display: flex;
                 align-items: center;
-
-                input {
-                    border-radius: 50px;
-                    font-size: 18px;
-                    padding: 14px 32px;
-                    min-width: 320px;
-                }
+                width: 310px;
 
                 .btn {
                     position: absolute;
                     background-color: var(--blue-color);
-                    right: 8px;
+                    top: 0;
+                    right: 0;
+                    width: 44px;
+                    height: 44px;
                     border-radius: 50%;
                     padding: 0;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    width: 46px;
-                    height: 46px;
 
-                    img {
-                        height: 28px;
+                    .icon {
+                        fill: var(--white-color);
+                    }
+
+                    &:hover {
+                        background-color: var(--blue-light-color);
                     }
                 }
             }
