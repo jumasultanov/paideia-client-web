@@ -29,10 +29,24 @@
     }
     watch(() => props.href, () => updateIcon)
     updateIcon()
+
+    function click(ev) {
+        if (props.loading) {
+            ev.preventDefault()
+            return false
+        }
+    }
 </script>
 
 <template>
-    <BButton :variant="variant" class="btn-component" :class="{ 'btn-white': white, loading, external }" :href="href">
+    <BButton
+        :variant="variant"
+        class="btn-component"
+        :class="{ 'btn-white': white, loading, external }"
+        :href="href"
+        :type="submit ? 'submit': 'button'"
+        @click="click"
+    >
         <i v-if="burger" class="left-icon">
             <HelperSvg name="burger" />
         </i>
@@ -40,7 +54,7 @@
             <slot />
         </span>
         <i v-if="rightIcon" class="right-icon">
-            <HelperSvg v-if="loading" name="loading" />
+            <div v-if="loading" class="loader"></div>
             <HelperSvg v-else :name="rightIcon" />
         </i>
     </BButton>

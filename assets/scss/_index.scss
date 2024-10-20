@@ -15,6 +15,8 @@ $blue: #4D6D9A;
     --gray-color: #D6D6D6;
     --dark-gray-color: #5F6366;
     --black-color: #353535;
+    --black-light-color: #858585;
+    --bg-lines-color: #EBEFF2;
     --orange-color: #EDD6B5;
     --orange-black-color: #755E3D;
     --purple-color: #B7B5ED;
@@ -112,6 +114,12 @@ a {
         }
     }
 
+    .link-text {
+        &:empty {
+            display: none;
+        }
+    }
+
     .left-icon {
         svg {
             stroke: var(--bs-btn-color);
@@ -120,7 +128,7 @@ a {
         }
     }
     
-    &:hover, &.active {
+    &:hover, &.active, &:active {
         
         &.btn-component {
             &::before {
@@ -134,6 +142,17 @@ a {
                 fill: var(--bs-btn-hover-color);
             }
         }
+
+    }
+
+    &:active {
+        .right-icon {
+            transform: scale(0.85);
+        }
+    }
+
+    &:focus-visible {
+        box-shadow: none;
     }
 
     .right-icon {
@@ -146,6 +165,7 @@ a {
         margin-top: -20px;
         margin-bottom: -22px;
         margin-right: calc(2px - var(--btn-padd-x));
+        transition: transform .1s ease-in-out;
         
         &::before {
             content: '';
@@ -163,6 +183,86 @@ a {
             fill: var(--bs-btn-bg);
         }
     }
+
+    &.loading {
+        --bs-btn-bg: var(--gray-color);
+        --bs-btn-color: var(--white-color);
+        --bs-btn-hover-bg: var(--gray-color);
+        --bs-btn-hover-color: var(--white-color);
+        --bs-btn-active-bg: var(--gray-color);
+        --bs-btn-active-color: var(--white-color);
+        cursor: wait;
+
+        &.btn-component {
+            &::before {
+                display: none;
+            }
+        }
+        
+        .right-icon {
+            &::before {
+                transform: scale(0.85);
+            }
+
+            svg {
+                stroke: var(--blue-light-color);
+                fill: var(--blue-light-color);
+                animation: rotation 2s linear infinite;
+            }
+        }
+
+        &:hover, &.active, &:active {
+        
+            .right-icon {
+                transform: scale(1);
+            }
+        }
+    }
+}
+
+.loader {
+    --main-color: var(--blue-light-color);
+    width: 24px;
+    aspect-ratio: 1;
+    --c: no-repeat radial-gradient(farthest-side,var(--main-color) 92%,#0000);
+    background: 
+      var(--c) 50%  0, 
+      var(--c) 50%  100%, 
+      var(--c) 100% 50%, 
+      var(--c) 0    50%;
+    background-size: 4px 4px;
+    animation: l18 1.3s linear infinite;
+    position: relative;
+
+    &::before {    
+        content:"";
+        position: absolute;
+        inset:0;
+        margin: 1px;
+        background: repeating-conic-gradient(#0000 0 35deg,var(--main-color) 0 90deg);
+        -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 2px),#000 0);
+        border-radius: 50%;
+    }
+}
+
+@keyframes l18 { 
+    100%{transform: rotate(1turn)}
+}
+
+.btn-primary {
+    --bs-btn-hover-bg: var(--blue-light-color);
+    --bs-btn-active-bg: var(--blue-light-color);
+
+    &:hover, &.active, &:active {
+        --btn-outline-border: var(--blue-light-color);
+
+        .right-icon {
+
+            &::before {
+                transform: scale(0.85);
+            }
+        }
+    }
 }
 
 .btn-white {
@@ -170,13 +270,16 @@ a {
     --bs-btn-color: var(--blue-color);
     --bs-btn-hover-bg: var(--white-color);
     --bs-btn-hover-color: var(--blue-light-color);
+    --bs-btn-active-bg: var(--white-color);
+    --bs-btn-active-color: var(--blue-light-color);
 
-    &:hover, &.active {
+    &:hover, &.active, &:active {
+        --btn-outline-border: var(--white-color);
 
         .right-icon {
 
             &::before {
-                transform: scale(0.8);
+                transform: scale(0.85);
                 background-color: var(--blue-light-color);
             }
         }
@@ -202,32 +305,9 @@ a {
     --btn-padd-x: 0px;
     --btn-padd-y: 0px;
     --bs-btn-hover-color: var(--blue-light-color);
+    --bs-btn-active-color: var(--blue-light-color);
     text-decoration: none;
     text-transform: none;
-}
-
-.form-control {
-    --bs-border-color: var(--blue-color);
-    padding: 11px 24px;
-    border-radius: 24px;
-    line-height: inherit;
-    
-    &:focus {
-        box-shadow: none;
-        border-color: var(--blue-color);
-    }
-    
-    &::placeholder {
-        color: rgba($blue, 0.35);
-    }
-}
-
-/*
-.alert {
-    --bs-alert-border-radius: 0;
-    --bs-border-width: 0;
-    --bs-alert-padding-x: 26px;
-    --bs-alert-padding-y: 26px;
 }
 
 .app-content {
@@ -240,45 +320,230 @@ a {
     }
 }
 
-.image-form {
-    margin-top: 100px;
+.modal-backdrop {
+    --bs-backdrop-bg: #353535;
+    --bs-backdrop-opacity: 0.7;
+}
 
-    .img-box {
-        display: flex;
-        justify-content: flex-end;
-        pointer-events: none;
-
-        img {
-            position: relative;
-            margin-right: -80px;
-        }
-    }
+.modal {
+    --bs-modal-width: 636px;
+    --bs-modal-border-radius: 22px;
+    --bs-modal-box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.1);
     
-    form {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
+    .modal-content {
+        padding: 48px;
+        gap: 48px;
+    }
+
+    .modal-header {
+        padding: 0;
+        border-bottom: none;
+        gap: 48px;
+        align-items: flex-start;
 
         h3 {
-            font-size: 36px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 32px;
+            flex: 1;
         }
 
-        .btn {
-            --bs-btn-padding-y: 16px;
-            justify-content: center;
-        }
+        .modal-close {
+            margin-left: auto;
+            display: flex;
+            padding: 6px;
+            cursor: pointer;
 
-        .alert {
-            margin-top: 32px;
-
-            .login-link {
-                margin-left: 8px;
-                font-weight: 700;
-                font-size: 18px;
+            &:hover {
+                .icon {
+                    stroke: var(--red-light-color);
+                }
             }
         }
+
+        .icon {
+            stroke: var(--blue-color);
+        }
     }
-}*/
+
+    .modal-body {
+        padding: 0;
+    }
+
+    .modal-footer {
+        padding: 0;
+        border-top: none;
+        justify-content: flex-start;
+        gap: 24px;
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.circle-box {
+    position: absolute;
+    background-color: var(--blue-color);
+    top: 3px;
+    right: 3px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-control {
+    --bs-border-color: var(--blue-color);
+    padding: 11px 24px;
+    border-radius: 24px;
+    line-height: inherit;
+    
+    &:focus {
+        box-shadow: none;
+        border-color: var(--blue-light-color);
+    }
+    
+    &::placeholder {
+        color: rgba($blue, 0.35);
+    }
+}
+
+.was-validated .form-control:invalid,
+.form-control.is-invalid,
+.was-validated .form-control:valid,
+.form-control.is-valid {
+    background-image: none;
+    
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+fieldset {
+    --bs-form-valid-color: var(--green-black-color);
+    --bs-form-valid-border-color: var(--green-color);
+    --bs-form-invalid-color: var(--red-black-color);
+    --bs-form-invalid-border-color: var(--red-light-color);
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .form-label {
+        font-size: 0.875rem;
+        padding-left: 24px;
+        padding-bottom: 0;
+        color: var(--dark-gray-color);
+    }
+
+    > div {
+        position: relative;
+    }
+
+    .invalid-icon {
+        background-color: var(--red-light-color);
+        cursor: pointer;
+
+        .icon {
+            fill: var(--red-black-color);
+            stroke: var(--red-black-color);
+        }
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        top: 8px;
+        left: 10px;
+        border-radius: 50%;
+        background-color: var(--blue-color);
+        transform: scale(0);
+        transition: transform .3s ease-in-out, background-color .3s ease-in-out;
+    }
+
+    &.not-allowed {
+        pointer-events: none;
+    }
+
+    &.is-invalid {
+        &::before {
+            background-color: var(--red-light-color);
+            transform: scale(1);
+        }
+    }
+
+    &.is-valid {
+        &::before {
+            background-color: var(--green-color);
+            transform: scale(1);
+        }
+    }
+
+    &.is-focus {
+        &::before {
+            background-color: var(--blue-light-color);
+            transform: scale(1.5);
+        }
+    }
+}
+
+.form-check {
+    display: flex;
+    gap: 12px;
+    padding: 4px 0 0;
+    margin: 0;
+    min-height: auto;
+
+    .form-check-input {
+        margin: 0;
+        box-shadow: none;
+    }
+
+    .form-check-label {
+        color: var(--dark-gray-color);
+        cursor: pointer;
+    }
+}
+
+.form-switch {
+    .form-check-input {
+        --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2.5' fill='%23fff'/%3e%3c/svg%3e") !important;
+        --bs-form-check-bg: var(--black-light-color);
+        width: 32px;
+        height: 20px;
+        border-radius: 10px;
+        border: none;
+        margin-top: 1px;
+    }
+}
+
+.tooltip {
+    --bs-tooltip-max-width: 300px;
+    --bs-tooltip-padding-x: 24px;
+    --bs-tooltip-padding-y: 12px;
+    --bs-tooltip-font-size: 1rem;
+    --bs-tooltip-color: var(--white-color);
+    --bs-tooltip-bg: var(--blue-color);
+    --bs-tooltip-border-radius: 22px;
+    --bs-tooltip-opacity: 1;
+
+    &.error {
+        --bs-tooltip-color: var(--red-black-color);
+        --bs-tooltip-bg: var(--red-light-color);
+    }
+}
+
+/*
+.alert {
+    --bs-alert-border-radius: 0;
+    --bs-border-width: 0;
+    --bs-alert-padding-x: 26px;
+    --bs-alert-padding-y: 26px;
+}
+*/

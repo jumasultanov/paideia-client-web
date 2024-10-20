@@ -1,3 +1,5 @@
+import { getActivePinia } from "pinia"
+
 //Перед запросом
 async function onRequest({ request, options }) {
     options.headers = options.headers || {}
@@ -19,35 +21,56 @@ function onRequestError({ request, options, error }) {
 }
 
 //Получили ответ
-function onResponse({ request, response, options }) {
-    // TODO: Спарсить в stories, если указано что-то
-    console.log('ОТВЕТ: ', response)
+function onResponse(response) {
+    if (response._data && response._data instanceof Object) {
+        const pinia = getActivePinia()
+        for (let key in response._data) {
+            if (!key.startsWith('#')) continue
+            const store = pinia._s.get(key.substring(1))
+            useInjectToStore(store, response._data[key])
+        }
+    }
 }
 
 async function httpRequest(url, method, body, query) {
     const auth = useAuthStore()
-    //Если нет токена, когда он нужен, то получаем сначала его
     if (method != 'GET' && !auth.authToken) await auth.setNewAuthToken()
-    //Посылаем запрос и получаем ответ
-    const { data, error: { value: h3error } } = await useLazyFetch(url, {
-        method, body, query,
-        onRequest, onRequestError, onResponse
+    let _resolve, _reject
+    const result = new Promise((resolve, reject) => {
+        _resolve = resolve
+        _reject = reject
     })
-    if (h3error instanceof Error) {
-        // Если какой-либо запрос выполнится с 401 ошибкой
-        /*if (h3error.statusCode == 401) {
-            auth().logout()
-        }*/
-        throw h3error
+    //Посылаем запрос и получаем ответ
+    const params = {
+        method, body, query,
+        watch: false,
+        onRequest, onRequestError,
+        //onResponseError,
+        onResponse: ({ response }) => {
+            if (response.ok) {
+                onResponse(response)
+                _resolve(response._data)
+            } else {
+                _reject(createError({ statusCode: response.status, data: response._data}))
+            }
+        },
     }
-    return data.value || {}
+    if (useIndexStore().appMounted) {
+        try {
+            await $fetch(url, params)
+        } catch(e) {
+            //При ошибке все равно попадет в onResponse
+        }
+    } else await useLazyFetch(url, params)
+
+    return result
 }
 
 export function useGet(url, body, query) {
     return httpRequest(url, 'GET', body, query)
 }
 
-export function usePost(url, body, query) {
+export function usePost(url, body, query, a) {
     return httpRequest(url, 'POST', body, query)
 }
 

@@ -29,6 +29,7 @@
 <style lang="scss">
     .title {
         position: relative;
+        display: block;
     
         .big {
             font-size: 1.67em;

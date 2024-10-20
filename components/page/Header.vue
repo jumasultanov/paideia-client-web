@@ -39,7 +39,7 @@
                     <HelperButton :outline="true" :burger="true">Исследовать</HelperButton>
                     <div class="search-form">
                         <BFormInput placeholder="Что вы хотите познавать?" autocomplete="off" />
-                        <BButton>
+                        <BButton class="circle-box">
                             <HelperSvg name="search" />
                         </BButton>
                     </div>
@@ -195,17 +195,6 @@
                 width: 310px;
 
                 .btn {
-                    position: absolute;
-                    background-color: var(--blue-color);
-                    top: 0;
-                    right: 0;
-                    width: 44px;
-                    height: 44px;
-                    border-radius: 50%;
-                    padding: 0;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
 
                     .icon {
                         fill: var(--white-color);

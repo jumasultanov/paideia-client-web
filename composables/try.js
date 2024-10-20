@@ -9,6 +9,10 @@ export async function useTryMessage(callback, errorCallback = null) {
         await callback()
         return true
     } catch(error) {
+        if (error.statusCode == 401) {
+            useAuthStore().logout()
+            return false
+        }
         if (process.client) {
             if (!error.withoutMessage) {
                 useErrorDisplay(error)

@@ -5,19 +5,19 @@ export const useFieldStore = defineStore('field', {
         fields: {
             userName: {
                 name: 'name',
-                placeholder: 'Ваше имя',
+                label: 'Ваше имя',
+                placeholder: 'Например, Иванов Иван',
                 rules: ['required'],
-                default: 'Test user', //TODO: delete
                 invalid: {
                     required: 'Введите Ваше имя',
                 }
             },
             userEmail: {
                 name: 'email',
-                placeholder: 'Адрес электронной почты',
+                label: 'Адрес электронной почты',
+                placeholder: 'Например, test@test.com',
                 type: 'email',
                 rules: ['required', 'email'],
-                default: 'test-user@gmail.com', //TODO: delete
                 invalid: {
                     required: 'Введите адрес электронной почты',
                     email: 'Указан некорректный адрес электронной почты',
@@ -26,10 +26,9 @@ export const useFieldStore = defineStore('field', {
             },
             userPassword: {
                 name: 'password',
-                placeholder: 'Пароль',
+                label: 'Пароль',
                 type: 'password',
                 rules: ['required', 'minLength:8'],
-                default: '12345678', //TODO: delete
                 invalid: {
                     required: 'Введите пароль',
                     minLength: 'Пароль должен быть из 8 символов или больше'
@@ -37,10 +36,9 @@ export const useFieldStore = defineStore('field', {
             },
             userConfirmationPassword: {
                 name: 'password_confirmation',
-                placeholder: 'Пароль еще раз',
+                label: 'Пароль еще раз',
                 type: 'password',
                 rules: ['required', 'sameAs:password'],
-                default: '12345678', //TODO: delete
                 invalid: {
                     required: 'Введите повторный пароль',
                     sameAs: 'Пароли должны совпадать'
@@ -48,26 +46,24 @@ export const useFieldStore = defineStore('field', {
             },
             userSubscribeNews: {
                 name: 'subscribe_news',
-                placeholder: 'Отправляйте мне письма о событиях и мероприятиях платформы',
+                label: 'Отправляйте мне письма о событиях и мероприятиях платформы',
                 type: 'checkbox',
                 default: true
             },
             loginEmail: {
                 name: 'email',
-                placeholder: 'Адрес электронной почты',
+                label: 'Электронная почта',
                 type: 'email',
-                unknownState: true,
                 rules: ['required', 'email'],
                 invalid: {
-                    required: 'Введите адрес электронной почты',
-                    email: 'Указан некорректный адрес электронной почты'
+                    required: 'Введите электронную почту или имя пользователя',
+                    email: 'Указан некорректный адрес электронной почты',
                 }
             },
             loginPassword: {
                 name: 'password',
-                placeholder: 'Пароль',
+                label: 'Пароль',
                 type: 'password',
-                unknownState: true,
                 rules: ['required'],
                 invalid: {
                     required: 'Введите пароль',
@@ -77,6 +73,11 @@ export const useFieldStore = defineStore('field', {
         groups: {
             registration: ['userName', 'userEmail', 'userPassword', 'userConfirmationPassword', 'userSubscribeNews'],
             login: ['loginEmail', 'loginPassword']
+        },
+        messages: {
+            email: {
+                'auth.failed': 'Вы указали неверную почту или пароль'
+            }
         }
     }),
     actions: {
