@@ -6,6 +6,7 @@ $blue: #4D6D9A;
     --blue-color: #4D6D9A;
     --blue-light-color: #86B3D1;
     --blue-light-text-color: #B2D2FE;
+    --gold-color: #EABA6A;
     --green-color: #99CED3;
     --green-light-color: #B5EDCC;
     --green-black-color: #356A6F;
@@ -21,25 +22,30 @@ $blue: #4D6D9A;
     --orange-black-color: #755E3D;
     --purple-color: #B7B5ED;
 
-    --bs-body-font-family: "Hero", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --bs-body-font-family: "Stolzl Book", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --bs-body-font-size: 16px;
     --bs-body-font-weight: normal;
     --bs-body-line-height: 1.25;
     --bs-body-color: var(--black-color);
 
     --space: 120px;
+    --header-height: 168px;
 }
 
 @mixin hard-font {
-    font-family: 'DeleddaOpen';
+    font-family: "Stolzl";
     font-weight: bold;
     line-height: 1.1;
     color: var(--dark-gray-color);
-    --back-color: var(--gray-color);
 }
 
-h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, .hard {
     @include hard-font;
+    margin-bottom: 0;
+}
+
+h3, .h3, h4, .h4 {
+    font-weight: 500;
 }
 
 h1, .h1 {
@@ -58,6 +64,10 @@ h4, .h4 {
     font-size: 20px;
 }
 
+.gold {
+    color: var(--gold-color);
+}
+
 a {
     &:not(.btn) {
         --link-color: var(--blue-color);
@@ -67,12 +77,30 @@ a {
         text-decoration: none;
         color: var(--link-color);
         border-bottom: 1px dashed var(--link-color);
-        transition: color .3s ease-in-out, border-color .3s ease-in-out;
+        transition: color .2s ease-in-out, border-color .2s ease-in-out;
 
         &:hover {
             color: var(--link-hover-color);
             border-color: var(--link-hover-color);
         }
+    }
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    background: var(--white-color);
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--gray-color);
+    background-clip: content-box;
+    border: 3px solid transparent;
+    border-radius: 30px;
+    transition: background-color .2s;
+
+    &:hover {
+        background-color: var(--black-light-color);
     }
 }
 
@@ -89,30 +117,15 @@ a {
     --btn-gap: 12px;
     --btn-icon-size: 40px;
     --btn-outline-border: var(--bs-btn-bg);
-    padding-top: calc(var(--btn-padd-y) - 1px);
-    padding-bottom: calc(var(--btn-padd-y) + 1px);
+    padding-top: var(--btn-padd-y);
+    padding-bottom: var(--btn-padd-y);
     padding-right: var(--btn-padd-x);
     padding-left: var(--btn-padd-x);
     position: relative;
-    text-transform: uppercase;
     display: flex;
     align-items: center;
     gap: var(--btn-gap);
-    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-
-    &.btn-component {
-        &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 1px solid var(--btn-outline-border);
-            border-radius: var(--bs-btn-border-radius);
-            transition: transform 0.3s ease-in-out, border-color .3s ease-in-out;
-        }
-    }
+    transition: color .2s ease-in-out, background-color .2s ease-in-out, border-color .2s ease-in-out, box-shadow .2s ease-in-out;
 
     .link-text {
         &:empty {
@@ -121,20 +134,21 @@ a {
     }
 
     .left-icon {
+        display: flex;
+
         svg {
             stroke: var(--bs-btn-color);
             fill: var(--bs-btn-color);
-            transition: stroke 0.3s ease-in-out, fill 0.3s ease-in-out;
+        }
+
+        .burger {
+            path {
+                transition: .2s;
+            }
         }
     }
     
     &:hover, &.active, &:active {
-        
-        &.btn-component {
-            &::before {
-                transform: translate(6px, 6px);
-            }
-        }
 
         .left-icon {
             svg {
@@ -142,7 +156,16 @@ a {
                 fill: var(--bs-btn-hover-color);
             }
         }
+    }
 
+    &.active {
+        .left-icon {
+            .burger {
+                path {
+                    d: path("M1 1L13 13M1 13L13 1M-2 7L-2 7");
+                }
+            }
+        }
     }
 
     &:active {
@@ -162,8 +185,8 @@ a {
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: -20px;
-        margin-bottom: -22px;
+        margin-top: -21px;
+        margin-bottom: -21px;
         margin-right: calc(2px - var(--btn-padd-x));
         transition: transform .1s ease-in-out;
         
@@ -174,7 +197,7 @@ a {
             height: 100%;
             border-radius: 50%;
             background-color: var(--bs-btn-color);
-            transition: transform .3s ease-in-out, background-color .3s ease-in-out;
+            transition: transform .2s ease-in-out, background-color .2s ease-in-out;
         }
 
         svg {
@@ -192,12 +215,6 @@ a {
         --bs-btn-active-bg: var(--gray-color);
         --bs-btn-active-color: var(--white-color);
         cursor: wait;
-
-        &.btn-component {
-            &::before {
-                display: none;
-            }
-        }
         
         .right-icon {
             &::before {
@@ -218,6 +235,10 @@ a {
             }
         }
     }
+}
+
+.icon {
+    transition: stroke .2s ease-in-out, fill .2s ease-in-out;
 }
 
 .loader {
@@ -261,6 +282,11 @@ a {
             &::before {
                 transform: scale(0.85);
             }
+
+            svg {
+                stroke: var(--bs-btn-hover-bg);
+                fill: var(--bs-btn-hover-bg);
+            }
         }
     }
 }
@@ -292,12 +318,6 @@ a {
 
     --bs-btn-bg: transparent;
     --bs-btn-color: var(--blue-color);
-
-    &.btn-component {
-        &::before {
-            display: none;
-        }
-    }
 }
 
 .btn-link {
@@ -372,6 +392,10 @@ a {
         border-top: none;
         justify-content: flex-start;
         gap: 24px;
+
+        > * {
+            margin: 0;
+        }
     }
 }
 
@@ -464,7 +488,7 @@ fieldset {
         border-radius: 50%;
         background-color: var(--blue-color);
         transform: scale(0);
-        transition: transform .3s ease-in-out, background-color .3s ease-in-out;
+        transition: transform .2s ease-in-out, background-color .2s ease-in-out;
     }
 
     &.not-allowed {
@@ -503,10 +527,17 @@ fieldset {
     .form-check-input {
         margin: 0;
         box-shadow: none;
+
+        &:checked {
+
+            + .form-check-label {
+                color: var(--dark-gray-color);
+            }
+        }
     }
 
     .form-check-label {
-        color: var(--dark-gray-color);
+        color: var(--black-light-color);
         cursor: pointer;
     }
 }
@@ -537,13 +568,31 @@ fieldset {
         --bs-tooltip-color: var(--red-black-color);
         --bs-tooltip-bg: var(--red-light-color);
     }
+
+    .tooltip-inner {
+        text-align: left;
+    }
 }
 
-/*
-.alert {
-    --bs-alert-border-radius: 0;
-    --bs-border-width: 0;
-    --bs-alert-padding-x: 26px;
-    --bs-alert-padding-y: 26px;
+.v-toast__item {
+    min-height: auto;
+    max-width: 600px;
+    padding: 24px;
+    gap: 12px;
+    border-radius: 22px !important;
+
+    .v-toast__icon {
+        margin: 0 !important;
+    }
+
+    .v-toast__text {
+        padding: 0 !important;
+    }
 }
-*/
+
+@keyframes jump {
+    50% {
+        transform: translateY(8px) rotate3d(0, 1, 0, 180deg);
+        fill: var(--gold-color);
+    }
+}

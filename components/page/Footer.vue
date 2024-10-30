@@ -122,7 +122,6 @@
                 
                 .icon {
                     fill: var(--white-color);
-                    transition: fill .3s ease-in-out;
                 }
 
                 &:hover {
@@ -146,7 +145,6 @@
 
             .icon {
                 fill: var(--white-color);
-                transition: fill .3s ease-in-out;
             }
 
             &:hover {

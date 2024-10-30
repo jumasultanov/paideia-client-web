@@ -1,4 +1,5 @@
 <script setup>
+    // TODO: Delete this component
     const props = defineProps({
         content: String,
         offset: {

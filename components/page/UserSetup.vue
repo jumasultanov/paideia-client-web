@@ -68,18 +68,18 @@
                         <span>{{ user.name }}</span>
                     </div>
                     <div class="user-links">
-                        <HelperLink size="14" icon="user">Открыть профиль</HelperLink>
-                        <HelperLink size="14" icon="edit">Редактировать профиль</HelperLink>
-                        <HelperLink size="14" icon="task">Ваши задания</HelperLink>
-                        <HelperLink size="14" icon="arrow-up">Личный прогресс</HelperLink>
+                        <HelperLink icon="user">Открыть профиль</HelperLink>
+                        <HelperLink icon="edit">Редактировать профиль</HelperLink>
+                        <HelperLink icon="task">Ваши задания</HelperLink>
+                        <HelperLink icon="progress">Личный прогресс</HelperLink>
                         <i class="divider"></i>
-                        <HelperLink @go="logout" size="14" icon="exit" class="red">Выйти</HelperLink>
+                        <HelperLink @go="logout" icon="exit" class="red">Выйти</HelperLink>
                     </div>
                 </div>
             </div>
         </template>
         <template v-else>
-            <HelperLink icon="login" @go="loginShow">Войти</HelperLink>
+            <HelperLink size="24" icon="login" @go="loginShow">Войти</HelperLink>
         </template>
     </div>
     <HelperModal :title="data[active].title" v-model="modal">
@@ -111,6 +111,7 @@
     .switch-form {
         display: flex;
         gap: 12px;
+        color: var(--dark-gray-color);
     }
 
     .user-burger {
@@ -127,8 +128,8 @@
             border-radius: 50%;
             border: 1px solid var(--blue-color);
             overflow: hidden;
-            z-index: 2;
-            transition: box-shadow .3s ease-in-out;
+            z-index: 3;
+            transition: box-shadow .2s ease-in-out;
 
             .default-ava {
                 margin: 6px 3px 0;
@@ -138,14 +139,14 @@
         &:hover {
 
             .user-ava {
-                box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+                box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.16);
             }
 
             .user-menu {
                 opacity: 1;
                 visibility: visible;
                 pointer-events: all;
-                transition: opacity .3s ease-in-out, visibility 0s;
+                transition: opacity .2s ease-in-out, visibility 0s;
             }
         }
 
@@ -174,21 +175,23 @@
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            z-index: 1;
-            transition: opacity .3s ease-in-out, visibility 0s .3s;
+            z-index: 2;
+            transition: opacity .2s ease-in-out, visibility 0s .2s;
 
             .user-name {
                 display: flex;
                 padding-right: calc(var(--ava-width) + var(--half-pad));
                 height: var(--ava-width);
                 align-items: center;
+                color: var(--dark-gray-color);
+                font-size: 1.125rem;
             }
 
             .user-links {
                 display: flex;
                 flex-direction: column;
                 gap: var(--half-pad);
-                padding-top: var(--half-pad);
+                padding-top: var(--wrapper-pad);
                 border-top: 1px solid var(--bg-lines-color);
 
                 .btn {
@@ -202,6 +205,7 @@
 
                 .divider {
                     border-top: 1px solid var(--bg-lines-color);
+                    margin-top: var(--half-pad);
                 }
             }
         }

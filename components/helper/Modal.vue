@@ -8,9 +8,7 @@
 <template>
     <BModal v-model="model">
         <template v-slot:header="{ cancel }">
-            <h3>
-                <HelperTitle :content="title" />
-            </h3>
+            <h3>{{ title }}</h3>
             <div class="modal-close" @click="cancel">
                 <HelperSvg name="close" />
             </div>

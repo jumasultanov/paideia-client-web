@@ -1,5 +1,23 @@
 <script setup>
     const showMenu = ref(false)
+
+    function triggerMenu(close = false) {
+        showMenu.value = close ? false : !showMenu.value
+    }
+
+    function anyClick(ev) {
+        if (ev.target.closest('.research-menu-content')) return
+        if (!showMenu.value) return
+        triggerMenu(true)
+    }
+
+    onMounted(() => {
+        document.addEventListener('click', anyClick)
+    })
+    
+    onBeforeUnmount(() => {
+        document.removeEventListener('click', anyClick)
+    })
 </script>
 
 <template>
@@ -15,18 +33,18 @@
                 </ul>
                 <div class="social-links">
                     <a class="social-link" href="#" target="_blank">
-                        <HelperSvg name="vk" size="22" />
+                        <HelperSvg name="vk" size="24" />
                     </a>
                     <a class="social-link" href="#" target="_blank">
-                        <HelperSvg name="tg" size="22" />
+                        <HelperSvg name="tg" size="24" />
                     </a>
                     <a class="social-link" href="#" target="_blank">
-                        <HelperSvg class="red" name="youtube" size="22" />
+                        <HelperSvg class="red" name="youtube" size="24" />
                     </a>
                 </div>
                 <div class="lang">
                     <span class="current">RU</span>
-                    <HelperSvg name="arrow-down" />
+                    <HelperSvg size="20" name="arrow-down" />
                 </div>
             </div>
         </nav>
@@ -36,7 +54,7 @@
                     <HelperSvg name="logo" />
                 </NuxtLink>
                 <div class="main-btns">
-                    <HelperButton :outline="true" :burger="true">Исследовать</HelperButton>
+                    <HelperButton :outline="true" :burger="true" :active="showMenu" @click.stop="triggerMenu()">Исследовать</HelperButton>
                     <div class="search-form">
                         <BFormInput placeholder="Что вы хотите познавать?" autocomplete="off" />
                         <BButton class="circle-box">
@@ -48,13 +66,21 @@
                 <PageUserSetup />
             </div>
         </div>
+        <PageMenu :show="showMenu" />
     </header>
 </template>
 
 
 <style lang="scss" scoped>
+    header {
+        position: relative;
+        z-index: 1;
+    }
+
     .top-nav {
         background-color: var(--blue-color);
+        position: relative;
+        z-index: 1;
 
         .container {
             display: flex;
@@ -100,12 +126,12 @@
             display: flex;
             gap: 12px;
             align-items: center;
-
+            
             .social-link {
+                padding: 18px 0;
 
                 .icon {
                     fill: var(--white-color);
-                    transition: fill .3s ease-in-out;
                 }
 
                 &:hover {
@@ -127,13 +153,14 @@
             cursor: pointer;
 
             .current {
+                position: relative;
+                top: 1px;
                 color: var(--white-color);
-                transition: color .3s ease-in-out;
+                transition: color .2s ease-in-out;
             }
             
             .icon {
                 fill: white;
-                transition: fill .3s ease-in-out;
             }
 
             &:hover {
@@ -150,7 +177,7 @@
 
         a {
             display: block;
-            padding: 18px 0;
+            padding: 20px 0;
             color: var(--white-color);
 
             &:hover {

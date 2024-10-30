@@ -10,6 +10,7 @@
         burger: Boolean,
         submit: Boolean,
         loading: Boolean,
+        active: Boolean,
     })
 
     const variant = ref(props.type)
@@ -20,10 +21,15 @@
     updateVariant()
 
     const rightIcon = ref(false)
+    const rightIconSize = ref(16)
     const external = ref(false)
     function updateIcon() {
         external.value = false
-        if (!props.href) return rightIcon.value = props.submit ? 'upload' : false
+        if (!props.href) {
+            rightIcon.value = props.submit ? 'send' : false
+            rightIconSize.value = props.submit ? 18 : 16
+            return
+        }
         rightIcon.value = 'arrow-right'
         if (/^http[s]*:\/\//.test(props.href)) external.value = true
     }
@@ -41,21 +47,20 @@
 <template>
     <BButton
         :variant="variant"
-        class="btn-component"
-        :class="{ 'btn-white': white, loading, external }"
+        :class="{ 'btn-white': white, loading, external, active }"
         :href="href"
         :type="submit ? 'submit': 'button'"
         @click="click"
     >
         <i v-if="burger" class="left-icon">
-            <HelperSvg name="burger" />
+            <svg class="burger" width="16" viewBox="0 0 16 14"><path d="M1 1L13 1M1 13L13 13M1 7L8 7" stroke-width="1.5" stroke-linecap="round" /></svg>
         </i>
         <span class="btn-text">
             <slot />
         </span>
         <i v-if="rightIcon" class="right-icon">
             <div v-if="loading" class="loader"></div>
-            <HelperSvg v-else :name="rightIcon" />
+            <HelperSvg v-else :name="rightIcon" :size="rightIconSize" />
         </i>
     </BButton>
 </template>
