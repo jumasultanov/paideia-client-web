@@ -1,0 +1,36 @@
+@mixin hard-font {
+    font-family: "Stolzl";
+    font-weight: bold;
+    line-height: 1.1;
+    color: var(--dark-gray-color);
+}
+
+@mixin medium-font {
+    font-family: "Stolzl";
+    font-weight: 500;
+    line-height: 1.24;
+}
+
+@mixin absolute-inner($content: 1) {
+    @if $content == 1 {
+        content: '';
+    }
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@mixin absolute-pseudo($content, $left: 0, $top: 0, $width: auto, $height: auto) {
+    content: $content;
+    position: absolute;
+    left: $left;
+    top: $top;
+    @if $width != auto {
+        width: $width;
+    }
+    @if $height != auto {
+        height: $height;
+    }
+}

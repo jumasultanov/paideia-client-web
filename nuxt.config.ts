@@ -31,7 +31,8 @@ export default defineNuxtConfig({
     css: [
         '~/assets/scss/_bootstrap.scss',
         '~/assets/scss/_index.scss',
-        '~/node_modules/vue-toast-notification/dist/theme-bootstrap.css'
+        '~/node_modules/vue-toast-notification/dist/theme-bootstrap.css',
+        '~/node_modules/@egjs/vue3-flicking/dist/flicking.css'
     ],
     modules: [
         '@pinia/nuxt',

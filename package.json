@@ -13,6 +13,7 @@
     "vue": "latest"
   },
   "dependencies": {
+    "@egjs/vue3-flicking": "^4.11.4",
     "@pinia/nuxt": "^0.5.4",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",

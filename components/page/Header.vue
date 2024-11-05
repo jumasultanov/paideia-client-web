@@ -24,7 +24,7 @@
     <header>
         <nav class="top-nav">
             <div class="container">
-                <ul class="top-menu">
+                <ul class="top-menu" not-style>
                     <li><a href="#">Миссия</a></li>
                     <li><a href="#">Задачи</a></li>
                     <li><a href="#">Новости</a></li>
@@ -54,7 +54,7 @@
                     <HelperSvg name="logo" />
                 </NuxtLink>
                 <div class="main-btns">
-                    <HelperButton :outline="true" :burger="true" :active="showMenu" @click.stop="triggerMenu()">Исследовать</HelperButton>
+                    <HelperButton class="fill-hover" :outline="true" :burger="true" :active="showMenu" @click.stop="triggerMenu()">Исследовать</HelperButton>
                     <div class="search-form">
                         <BFormInput placeholder="Что вы хотите познавать?" autocomplete="off" />
                         <BButton class="circle-box">
@@ -91,10 +91,7 @@
 
         .top-menu {
             display: flex;
-            list-style: none;
             align-items: center;
-            margin-bottom: 0;
-            padding: 0;
             
             li {
                 position: relative;

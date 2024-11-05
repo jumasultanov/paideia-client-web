@@ -2,7 +2,7 @@
     import { useVuelidate } from '@vuelidate/core'
 
     const emit = defineEmits(['submit'])
-    const props = defineProps(['name', 'button'])
+    const props = defineProps(['name', 'button', 'white', 'invalid-placement'])
 
     const indexStore = useIndexStore()
     const fieldStore = useFieldStore()
@@ -52,15 +52,19 @@
             v-for="(field, key) in fields"
                 :key="key"
                 ref="form-input"
+                :class="{ white }"
                 :not-allowed="loading"
                 :field="field"
                 :validator="v$[field.name] || null"
+                :invalid-placement="invalidPlacement"
                 v-model="formData[field.name]"
         />
         <HelperButton
             v-if="button"
             :submit="true"
             :type="button.style"
+            :outline="button.outline"
+            :white="white"
             :loading="loading"
         >{{ button.text }}</HelperButton>
         <slot name="footer"></slot>

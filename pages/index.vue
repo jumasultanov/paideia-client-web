@@ -8,5 +8,10 @@
     <main>
         <PageIndexFirst />
         <PageIndexOpportunity />
+        <PageIndexRoles />
+        <PageIndexProjects />
+        <PageIndexAboutUs />
+        <PageIndexNews />
+        <PageIndexContactUs />
     </main>
 </template>

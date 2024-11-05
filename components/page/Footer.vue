@@ -16,7 +16,7 @@
                 <div class="col-2 content">
                     <nav class="bottom-menu">
                         <span class="links-title">О нас</span>
-                        <ul>
+                        <ul not-style>
                             <li><a href="#">Миссия</a></li>
                             <li><a href="#">Наш прогресс</a></li>
                             <li><a href="#">Новости</a></li>
@@ -27,7 +27,7 @@
                 <div class="col-3 content">
                     <nav class="bottom-menu">
                         <span class="links-title">Проекты</span>
-                        <ul>
+                        <ul not-style>
                             <li><a href="#">Проектирование будущего</a></li>
                             <li><a href="#">Сити-фермерство</a></li>
                             <li><a href="#">Liberum Terra</a></li>
@@ -64,7 +64,6 @@
 <style lang="scss" scoped>
     footer {
         background: linear-gradient(180deg, #4D6D9A 0%, #7595C2 100%);
-        border-top: 1px solid var(--white-color);
         padding: var(--space) 0;
         color: var(--white-color);
 
@@ -95,9 +94,6 @@
             }
 
             ul {
-                list-style: none;
-                padding-left: 0;
-                margin: 0;
                 display: flex;
                 gap: 12px;
                 flex-direction: column;

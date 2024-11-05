@@ -69,10 +69,28 @@ export const useFieldStore = defineStore('field', {
                     required: 'Введите пароль',
                 }
             },
+            userOrg: {
+                name: 'name',
+                label: 'Ваше имя или организация',
+                rules: ['required'],
+                invalid: {
+                    required: 'Введите Ваше имя или организацию',
+                }
+            },
+            userContactLink: {
+                name: 'link',
+                label: 'Эл. почта, социальная сеть',
+                placeholder: 't.me/username',
+                rules: ['required'],
+                invalid: {
+                    required: 'Введите электронную почту или ссылку на социальную сеть',
+                }
+            },
         },
         groups: {
             registration: ['userName', 'userEmail', 'userPassword', 'userConfirmationPassword', 'userSubscribeNews'],
-            login: ['loginEmail', 'loginPassword']
+            login: ['loginEmail', 'loginPassword'],
+            contactUs: ['userOrg', 'userContactLink'],
         },
         messages: {
             email: {

@@ -1,5 +1,5 @@
 <script setup>
-    const props = defineProps(['field', 'validator', 'not-allowed'])
+    const props = defineProps(['field', 'validator', 'not-allowed', 'invalid-placement'])
     const model = defineModel()
     
     const modelBeforeTouch = ref('')
@@ -52,14 +52,14 @@
     >
         <BFormCheckbox v-if="isCheckbox" switch v-model="model" @focus="touch">{{ field.label }}</BFormCheckbox>
         <template v-else>
-            <BFormInput :placeholder="field.placeholder" :type="field.type" v-model="model" :state="state" @focus="focus" @blur="touch" />
+            <BFormInput autocomplete="off" :placeholder="field.placeholder" :type="field.type" v-model="model" :state="state" @focus="focus" @blur="touch" />
             <BPopover
                 v-if="errorMessage"
                 ref="popover"
                 :click="true"
                 :close-on-hide="true"
                 :delay="{show: 0, hide: 0}"
-                placement="right"
+                :placement="invalidPlacement || 'right'"
                 :offset="12"
                 :tooltip="true"
                 class="error"
